@@ -1,21 +1,16 @@
-# Sweater
+# SWEATER
 
-**TODO: Add description**
+A small application for weather recommendations.
 
-## Installation
+# USAGE
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `sweater` to your list of dependencies in `mix.exs`:
+Start the project by calling `iex -S mix` from the command line.
 
-```elixir
-def deps do
-  [
-    {:sweater, "~> 0.1.0"}
-  ]
-end
-```
+Uses ExOWM to interact with the OpenWeatherMap API. 
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/sweater](https://hexdocs.pm/sweater).
+To call the API, you will need to have your API key set as an environment variable.
+
+`export OWM_API_KEY={your api key}`
+
+ 
 

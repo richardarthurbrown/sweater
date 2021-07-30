@@ -1,18 +1,8 @@
 defmodule Sweater do
-  @moduledoc """
-  Documentation for `Sweater`.
-  """
+  alias ExOwm
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Sweater.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def get_weather(city) do
+    ExOwm.get_current_weather([%{city: city}])
   end
+
 end
