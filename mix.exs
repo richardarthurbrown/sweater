@@ -20,6 +20,8 @@ defmodule Sweater.MixProject do
 
   # Run "mix help deps" to learn about dependencies.
   defp deps() do
-    [{:ex_owm, "~> 1.2.3"}]
+    [
+      {:ex_owm, "~> 1.2.3"}
+    ]
   end
 end
