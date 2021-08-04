@@ -22,6 +22,7 @@ defmodule Sweater do
   def get_weather(city) when is_binary(city) do
     ExOwm.get_sixteen_day_forecast([%{city: city}], @options)
     |> handle_response()
+    |> List.flatten()
   end
 
   def get_weather(_), do: IO.puts("Please input your city surrounded by quotation marks.")
@@ -33,7 +34,7 @@ defmodule Sweater do
     end
   end
 
-  defp handle_response([{:error, message, response}]) do
+  defp handle_response([{:error, _message, _response}]) do
     "Error getting weather"
   end
 
@@ -41,6 +42,7 @@ defmodule Sweater do
   defp parse_forecast(%{"temp" => %{"day" => temp}, "weather" => [%{"id" => weather_id}]}) do
     is_precipitation?(weather_id)
     |> get_recommendations(temp)
+    |> format_recommendations()
   end
 
   @spec is_precipitation?(integer()) :: boolean()
@@ -52,5 +54,19 @@ defmodule Sweater do
     end
   end
 
-  defp
+  @spec get_recommendations(boolean(), integer()) :: list(map())
+  defp get_recommendations(precip, temp) do
+    recs = @weather_config.recommendations
+
+    Enum.filter(recs, fn rec ->
+      rec.waterproof == precip and rec.max_temp > temp and temp > rec.min_temp
+    end)
+    |> List.flatten()
+  end
+
+  defp format_recommendations(recommendations) do
+    for recommendation <- recommendations do
+      recommendation.name
+    end
+  end
 end
