@@ -1,4 +1,5 @@
 defmodule Sweater do
+
   alias ExOwm
 
   @options [
@@ -18,24 +19,24 @@ defmodule Sweater do
     ]
   }
 
-  @spec get_weather(String.t()) :: any()
+  @spec get_weather(String.t()) :: list(String.t()) | String.t()
   def get_weather(city) when is_binary(city) do
     ExOwm.get_sixteen_day_forecast([%{city: city}], @options)
     |> handle_response()
-    |> List.flatten()
   end
 
-  def get_weather(_), do: IO.puts("Please input your city surrounded by quotation marks.")
+  def get_weather(_), do: "Please input your city surrounded by quotation marks."
 
   @spec handle_response(map()) :: map() | String.t()
   defp handle_response(ok: %{"list" => forecasts}) do
     for forecast <- forecasts do
       parse_forecast(forecast)
     end
+    |> List.flatten()
   end
 
   defp handle_response([{:error, _message, _response}]) do
-    "Error getting weather"
+    "Error getting weather data, please try again."
   end
 
   @spec parse_forecast(map()) :: any()
@@ -64,6 +65,7 @@ defmodule Sweater do
     |> List.flatten()
   end
 
+  @spec format_recommendations(list(map())) :: list(String.t())
   defp format_recommendations(recommendations) do
     for recommendation <- recommendations do
       recommendation.name
